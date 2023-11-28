@@ -11,11 +11,11 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+    // Do something before request is sent
     config.params = {
       ...config.params,
       api_key: '8d813ed737724950bf0334d811fb2370'
     }
-    // Do something before request is sent
     return config
   },
   (error) => {
