@@ -1,9 +1,7 @@
 import axios from 'axios'
 
-export const BASE_API_URL = 'https://api.themoviedb.org/3'
-
 const api = axios.create({
-  baseURL: BASE_API_URL,
+  baseURL: process.env.REACT_APP_BASE_API,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -14,7 +12,7 @@ api.interceptors.request.use(
     // Do something before request is sent
     config.params = {
       ...config.params,
-      api_key: '8d813ed737724950bf0334d811fb2370'
+      api_key: process.env.REACT_APP_API_KEY
     }
     return config
   },

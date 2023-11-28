@@ -6,13 +6,16 @@ type Props = {
   data: MovieItem
 }
 
+const assetBasePath = process.env.REACT_APP_TMDB_ASSET_PATH || ''
+const defaultImage = 'https://t3.ftcdn.net/jpg/04/62/93/66/360_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg'
+
 const MovieCard: React.FC<Props> = ({ data }) => {
   return (
     <div className="w-full group cursor-pointer shadow-xl relative rounded-lg overflow-hidden transition-all duration-300 scale-[.97] hover:scale-100">
       <img
         alt={`Movie Poster of ${data.original_title}`}
         loading="lazy"
-        src={(data.backdrop_path || data.poster_path) ? `https://www.themoviedb.org/t/p/original/${data.backdrop_path || data.poster_path}` : 'https://t3.ftcdn.net/jpg/04/62/93/66/360_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg'}
+        src={(data.backdrop_path || data.poster_path) ? assetBasePath + (data.backdrop_path || data.poster_path) : defaultImage}
         className="w-full aspect-[9/12] object-cover object-center"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/10 flex flex-col justify-between p-5">
