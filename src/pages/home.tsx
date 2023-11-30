@@ -2,12 +2,15 @@ import { lazy, memo, useEffect, useState } from "react";
 import { useDiscoverMovies } from "../hooks/discover-movies";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SearchBox from "../components/SearchBox";
+import { useGenreMovies } from "../hooks/genre-movies";
+import { getMovieGenresTitle } from "../utils/movies";
 
 const MovieCard = lazy(() => import("../components/MovieCard"));
 
 const App = () => {
   const [mounted, setMounted] = useState<boolean>(false)
-  const { movies, total, getMovies, onLoadMore } = useDiscoverMovies()
+  const { isLoading, selectedGenreId, changeSelectedGenreId, movies, total, getMovies, onLoadMore } = useDiscoverMovies()
+  const { genres, indexedMovieGenres, getMovieGenres } = useGenreMovies()
 
   useEffect(() => {
     // prevent the api called twice
@@ -15,8 +18,9 @@ const App = () => {
       setMounted(true)
       return
     }
+    getMovieGenres()
     getMovies()
-  }, [mounted, getMovies])
+  }, [mounted, getMovieGenres, getMovies])
 
   return (
     <InfiniteScroll
@@ -32,8 +36,30 @@ const App = () => {
         </div>
         <SearchBox/>
       </div>
+      <div className="inline-flex flex-wrap gap-3">
+        {genres.map(({ id, name }) => (
+          <div 
+            key={id}
+            onClick={() => changeSelectedGenreId(id)}
+            className={`${selectedGenreId === id ? 'text-white bg-red-700' : 'text-red-400 hover:text-white hover:bg-red-700 cursor-pointer'} border-2 border-red-400 px-4 py-1.5 text-sm rounded-lg transition-all font-semibold`}
+          >
+            {name}
+          </div>
+        ))}
+      </div>
+      {(isLoading && movies.length < 1) && (
+        <div className="w-full grid place-items-center h-[60vh]">
+          <div className="text-xs text-white">Loading...</div>
+        </div>
+      )}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {movies.map(movie => <MovieCard key={movie.id} data={movie}/>)}
+        {movies.map(movie => (
+          <MovieCard 
+            key={movie.id}
+            data={movie}
+            genre={getMovieGenresTitle(movie.genre_ids, indexedMovieGenres)}
+          />
+        ))}
       </div>
     </InfiniteScroll>
   );

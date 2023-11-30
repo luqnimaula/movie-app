@@ -7,12 +7,13 @@ export const useDiscoverMovies = () => {
   const [movies, setMovies] = useState<MovieItem[]>([])
   const [page, setPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
+  const [selectedGenreId, setSelectedGenreId] = useState<number>(0)
 
   const getMovies = useCallback(
     async () => {
       try {
         setIsLoading(true)
-        const { data } = await fetchDiscoverMovies(page)
+        const { data } = await fetchDiscoverMovies(page, selectedGenreId)
         setMovies(current => [...current, ...data.results])
         setTotal(data.total_results)
       } catch (error) {
@@ -21,15 +22,26 @@ export const useDiscoverMovies = () => {
         setIsLoading(false)
       }
     },
-    [page]
+    [page, selectedGenreId]
   )
 
+  // increment the current page state value
   const onLoadMore = useCallback(() => setPage(currentPage => currentPage + 1), [])
+
+  const changeSelectedGenreId = useCallback((id: number) => {
+    setSelectedGenreId(id)
+    // reset the movie's state
+    setPage(1)
+    setTotal(0)
+    setMovies([])
+  }, [])
 
   return {
     isLoading,
     movies,
     total,
+    selectedGenreId,
+    changeSelectedGenreId,
     getMovies,
     onLoadMore
   }

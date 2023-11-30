@@ -1,12 +1,27 @@
 import { DefaultApiResponseWithPagination } from "../types/api"
-import { MovieItem } from "../types/movies"
+import { MovieGenreItem, MovieItem } from "../types/movies"
 import api from "../utils/api"
 
-export const fetchDiscoverMovies = async (page: number) => {
+export const fetchMovieGenres = async () => {
+  try {
+    const response = await api.get<{ genres: Array<MovieGenreItem> }>('/genre/movie/list')
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const fetchDiscoverMovies = async (page: number, genreId?: number) => {
   try {
     const response = await api.get<DefaultApiResponseWithPagination<MovieItem[]>>(
       '/discover/movie',
-      { params: { include_video: true, page } }
+      {
+        params: { 
+          include_video: true,
+          page,
+          ...genreId ? { with_genres: genreId } : {}
+        }
+      }
     )
     return response
   } catch (error) {

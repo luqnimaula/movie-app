@@ -1,3 +1,8 @@
+export type MovieGenreItem = { 
+  id: number
+  name: string
+}
+
 export type MovieItem = {
   adult: boolean
   backdrop_path: string

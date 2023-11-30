@@ -4,12 +4,13 @@ import { Star } from "react-feather"
 
 type Props = {
   data: MovieItem
+  genre?: string
 }
 
 const assetBasePath = process.env.REACT_APP_TMDB_ASSET_PATH || ''
 const defaultImage = 'https://t3.ftcdn.net/jpg/04/62/93/66/360_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg'
 
-const MovieCard: React.FC<Props> = ({ data }) => {
+const MovieCard: React.FC<Props> = ({ data, genre }) => {
   return (
     <div className="w-full group cursor-pointer shadow-xl relative rounded-lg overflow-hidden transition-all duration-300 scale-[.97] hover:scale-100">
       <img
@@ -24,11 +25,18 @@ const MovieCard: React.FC<Props> = ({ data }) => {
         </div>
         <div className="w-full space-y-2">
           <h2 className="text-white text-lg font-semibold leading-6">{data.original_title}</h2>
-          {data.release_date && (
-            <div className="text-sm text-white">
-              {(new Date(data.release_date)).getFullYear()}
-            </div>
-          )}
+          <div className="inline-flex gap-3">
+            {data.release_date && (
+              <div className="text-sm text-white">
+                {(new Date(data.release_date)).getFullYear()}
+              </div>
+            )}
+            {genre && (
+              <div className="text-sm text-white">
+                {genre}
+              </div>
+            )}
+          </div>
           <p 
             title={data.overview}
             className="text-white mt-2 text-xs transition-all ease-in-out duration-300 w-full max-h-0 group-hover:max-h-16 overflow-hidden line-clamp-4"

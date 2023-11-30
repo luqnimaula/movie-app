@@ -25,6 +25,7 @@ export const useSearchMovies = () => {
     [page]
   )
 
+  // increment the current page state value
   const onLoadMore = useCallback(() => setPage(currentPage => currentPage + 1), [])
 
   return {
