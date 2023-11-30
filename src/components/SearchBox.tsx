@@ -17,11 +17,11 @@ const SearchBox: React.FC<Props> = ({ defaultValue }) => {
         name="query"
         required
         defaultValue={defaultValue || ''}
-        className="w-full rounded-full px-5 py-2 bg-transparent border-white border-2 text-white"
+        className="w-full rounded-lg px-5 py-2 bg-transparent border-white/60 border-2 text-white"
         placeholder="Search movie..."
       />
       <button type="submit">
-        <Search className="w-8 text-white cursor-pointer"/>
+        <Search className="w-8 text-white/60 cursor-pointer"/>
       </button>
     </form>
   )

@@ -8,7 +8,7 @@ type Props = {
 }
 
 const assetBasePath = process.env.REACT_APP_TMDB_ASSET_PATH || ''
-const defaultImage = 'https://t3.ftcdn.net/jpg/04/62/93/66/360_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg'
+const defaultImage = 'https://app.swagup.com/images/public/nopic.jpg'
 
 const MovieCard: React.FC<Props> = ({ data, genre }) => {
   return (
@@ -19,8 +19,8 @@ const MovieCard: React.FC<Props> = ({ data, genre }) => {
         src={(data.backdrop_path || data.poster_path) ? assetBasePath + (data.backdrop_path || data.poster_path) : defaultImage}
         className="w-full aspect-[9/12] object-cover object-center"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/10 flex flex-col justify-between p-5">
-        <div className="w-fit inline-flex shadow-lg items-center gap-1 bg-red-600 rounded-md px-2 py-1 text-white text-sm font-semibold">
+      <div className="absolute inset-0 bg-gradient-to-t transition-all duration-500 from-[#0F0F0F]/95 to-[#0F0F0F]/30 group-hover:to-[#0F0F0F]/60  flex flex-col justify-between p-5">
+        <div className="w-fit inline-flex shadow-lg items-center gap-1 bg-primary-darkest/70 rounded-md px-2 py-1 text-white text-sm font-semibold">
           <Star className="w-3"/>{data.vote_average.toFixed(1)}
         </div>
         <div className="w-full space-y-2">

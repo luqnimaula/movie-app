@@ -12,11 +12,12 @@ const App = () => {
   const navigate = useNavigate()
   const { search } = useLocation()
   const [mounted, setMounted] = useState<boolean>(false)
-  const { movies, total, getMovies, onLoadMore } = useSearchMovies()
+  const { isLoading, movies, total, getMovies, onLoadMore } = useSearchMovies()
   const { indexedMovieGenres, getMovieGenres } = useGenreMovies()
   const query = useMemo(() => new URLSearchParams(search).get('query'), [search])
 
   useEffect(() => {
+    // call the api only when it's been mounted
     if (mounted) getMovieGenres()
   }, [mounted])
 
@@ -40,18 +41,28 @@ const App = () => {
       next={onLoadMore}
       hasMore={movies.length < total}
       loader={<div className='text-center mt-4 text-white'>Loading more movies...</div>}
-      className='w-full min-h-screen bg-gradient-to-tr from-sky-950 via-sky-900 to-sky-800 p-10 space-y-8'
+      className='w-full min-h-screen p-10 space-y-8'
     >
-      <div className="flex justify-between items-center gap-3">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6 md:gap-3">
         <div className="text-white space-y-1">
           <div className="text-3xl font-bold">
-            Search Resluts for "{query}"
+            Results for "{query}"
           </div>
           <div>Found {total} search results</div>
         </div>
         <SearchBox defaultValue={query || ''}/>
       </div>
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      {(isLoading && movies.length < 1) && (
+        <div className="w-full grid place-items-center h-[60vh]">
+          <div className="text-sm text-white">Loading...</div>
+        </div>
+      )}
+      {(!isLoading && movies.length < 1) && (
+        <div className="w-full grid place-items-center h-[60vh]">
+          <div className="text-sm text-white">No any movies found</div>
+        </div>
+      )}
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {movies.map(movie => (
           <MovieCard 
             key={movie.id}

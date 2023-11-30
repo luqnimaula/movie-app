@@ -6,7 +6,7 @@ export const useGenreMovies = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [genres, setGenres] = useState<MovieGenreItem[]>([])
   
-  // this variable for access the genre title to reduce big O notation O(n)
+  // this variable for access the genre title to reduce time and space complexity O(n)
   const indexedMovieGenres = useMemo(() => {
     return genres.reduce((object, genre) => {
       return {

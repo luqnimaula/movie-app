@@ -11,7 +11,7 @@ const GenreItem: React.FC<Props> = ({ name, value, isActive, onSelect }) => {
   return (
     <div 
       onClick={() => onSelect(value)}
-      className={`${isActive ? 'text-white bg-red-700' : 'text-red-400 hover:text-white hover:bg-red-700 cursor-pointer'} border-2 border-red-400 px-4 py-1.5 text-sm rounded-lg transition-all font-semibold`}
+      className={`${isActive ? 'text-white bg-primary-darkest' : 'text-primary hover:text-white bg-primary-darkest/25 hover:bg-primary-darkest cursor-pointer'} border-2 border-primary-darkest px-4 py-1.5 text-sm rounded-lg transition-all font-semibold`}
     >
       {name}
     </div>
