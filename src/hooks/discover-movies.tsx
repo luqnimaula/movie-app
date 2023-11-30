@@ -13,7 +13,7 @@ export const useDiscoverMovies = () => {
     async () => {
       try {
         setIsLoading(true)
-        const { data } = await fetchDiscoverMovies(page, selectedGenreId)
+        const { data } = await fetchDiscoverMovies({ page, genreId: selectedGenreId })
         setMovies(current => [...current, ...data.results])
         setTotal(data.total_results)
       } catch (error) {

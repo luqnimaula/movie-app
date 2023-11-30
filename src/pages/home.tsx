@@ -14,12 +14,15 @@ const App = () => {
   const { genres, indexedMovieGenres, getMovieGenres } = useGenreMovies()
 
   useEffect(() => {
+    if (mounted) getMovieGenres()
+  }, [mounted])
+
+  useEffect(() => {
     // prevent the api called twice
     if (!mounted) {
       setMounted(true)
       return
     }
-    getMovieGenres()
     getMovies()
   }, [mounted, getMovieGenres, getMovies])
 
@@ -40,6 +43,7 @@ const App = () => {
       <div className="inline-flex flex-wrap gap-3">
         {genres.map(({ id, name }) => (
           <GenreItem
+            key={id}
             name={name}
             value={id}
             isActive={selectedGenreId === id}

@@ -25,7 +25,7 @@ const MovieCard: React.FC<Props> = ({ data, genre }) => {
         </div>
         <div className="w-full space-y-2">
           <h2 className="text-white text-lg font-semibold leading-6">{data.original_title}</h2>
-          <div className="inline-flex gap-3">
+          <div className="inline-flex gap-4">
             {data.release_date && (
               <div className="text-sm text-white">
                 {(new Date(data.release_date)).getFullYear()}

@@ -13,7 +13,7 @@ export const useSearchMovies = () => {
     async (query: string) => {
       try {
         setIsLoading(true)
-        const { data } = await fetchSearchMovies(query, page)
+        const { data } = await fetchSearchMovies({query, page})
         setMovies(current => [...current, ...data.results])
         setTotal(data.total_results)
       } catch (error) {

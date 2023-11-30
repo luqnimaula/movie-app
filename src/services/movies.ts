@@ -1,5 +1,5 @@
 import { DefaultApiResponseWithPagination } from "../types/api"
-import { MovieGenreItem, MovieItem } from "../types/movies"
+import { DiscoverMoviesParams, MovieGenreItem, MovieItem, SearchMoviesParams } from "../types/movies"
 import api from "../utils/api"
 
 export const fetchMovieGenres = async () => {
@@ -11,7 +11,7 @@ export const fetchMovieGenres = async () => {
   }
 }
 
-export const fetchDiscoverMovies = async (page: number, genreId?: number) => {
+export const fetchDiscoverMovies = async ({ page, genreId  }: DiscoverMoviesParams) => {
   try {
     const response = await api.get<DefaultApiResponseWithPagination<MovieItem[]>>(
       '/discover/movie',
@@ -29,11 +29,17 @@ export const fetchDiscoverMovies = async (page: number, genreId?: number) => {
   }
 }
 
-export const fetchSearchMovies = async (query: string, page: number) => {
+export const fetchSearchMovies = async ({query, page}: SearchMoviesParams) => {
   try {
     const response = await api.get<DefaultApiResponseWithPagination<MovieItem[]>>(
       '/search/movie',
-      { params: { include_video: true, query, page } }
+      {
+        params: {
+          include_video: true,
+          query,
+          page,
+        }
+      }
     )
     return response
   } catch (error) {

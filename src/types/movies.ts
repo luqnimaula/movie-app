@@ -1,3 +1,13 @@
+export type DiscoverMoviesParams = {
+  page: number
+  genreId?: number
+}
+
+export type SearchMoviesParams = {
+  query: string
+  page: number
+}
+
 export type MovieGenreItem = { 
   id: number
   name: string

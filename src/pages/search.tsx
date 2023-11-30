@@ -3,6 +3,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SearchBox from "../components/SearchBox";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSearchMovies } from "../hooks/search-movies";
+import { useGenreMovies } from "../hooks/genre-movies";
+import { getMovieGenresTitle } from "../utils/movies";
 
 const MovieCard = lazy(() => import("../components/MovieCard"));
 
@@ -11,7 +13,12 @@ const App = () => {
   const { search } = useLocation()
   const [mounted, setMounted] = useState<boolean>(false)
   const { movies, total, getMovies, onLoadMore } = useSearchMovies()
+  const { indexedMovieGenres, getMovieGenres } = useGenreMovies()
   const query = useMemo(() => new URLSearchParams(search).get('query'), [search])
+
+  useEffect(() => {
+    if (mounted) getMovieGenres()
+  }, [mounted])
 
   useEffect(() => {
     // prevent the api called twice
@@ -45,7 +52,13 @@ const App = () => {
         <SearchBox/>
       </div>
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {movies.map(movie => <MovieCard key={movie.id} data={movie}/>)}
+        {movies.map(movie => (
+          <MovieCard 
+            key={movie.id}
+            data={movie}
+            genre={getMovieGenresTitle(movie.genre_ids, indexedMovieGenres)}
+          />
+        ))}
       </div>
     </InfiniteScroll>
   );
