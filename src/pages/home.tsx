@@ -4,6 +4,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SearchBox from "../components/SearchBox";
 import { useGenreMovies } from "../hooks/genre-movies";
 import { getMovieGenresTitle } from "../utils/movies";
+import GenreItem from "../components/GenreItem";
 
 const MovieCard = lazy(() => import("../components/MovieCard"));
 
@@ -38,13 +39,12 @@ const App = () => {
       </div>
       <div className="inline-flex flex-wrap gap-3">
         {genres.map(({ id, name }) => (
-          <div 
-            key={id}
-            onClick={() => changeSelectedGenreId(id)}
-            className={`${selectedGenreId === id ? 'text-white bg-red-700' : 'text-red-400 hover:text-white hover:bg-red-700 cursor-pointer'} border-2 border-red-400 px-4 py-1.5 text-sm rounded-lg transition-all font-semibold`}
-          >
-            {name}
-          </div>
+          <GenreItem
+            name={name}
+            value={id}
+            isActive={selectedGenreId === id}
+            onSelect={() => changeSelectedGenreId(id)}
+          />
         ))}
       </div>
       {(isLoading && movies.length < 1) && (
