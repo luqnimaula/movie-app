@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
-import { MovieItem } from "../types/movies"
-import { fetchDiscoverMovies } from "../services/movies"
+import { MovieItem } from "src/types/movies"
+import { fetchDiscoverMovies } from "src/services/movies"
 
 export const useDiscoverMovies = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)

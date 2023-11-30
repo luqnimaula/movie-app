@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
-import { MovieItem } from "../types/movies"
-import { fetchSearchMovies } from "../services/movies"
+import { MovieItem } from "src/types/movies"
+import { fetchSearchMovies } from "src/services/movies"
 
 export const useSearchMovies = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)

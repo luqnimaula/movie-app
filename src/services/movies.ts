@@ -1,6 +1,6 @@
-import { DefaultApiResponseWithPagination } from "../types/api"
-import { DiscoverMoviesParams, MovieGenreItem, MovieItem, SearchMoviesParams } from "../types/movies"
-import api from "../utils/api"
+import { DefaultApiResponseWithPagination } from "src/types/api"
+import { DiscoverMoviesParams, MovieGenreItem, MovieItem, SearchMoviesParams } from "src/types/movies"
+import api from "src/utils/api"
 
 export const fetchMovieGenres = async () => {
   try {

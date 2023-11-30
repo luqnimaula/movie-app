@@ -1,12 +1,12 @@
 import { lazy, memo, useEffect, useMemo, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import SearchBox from "../components/SearchBox";
+import SearchBox from "src/components/SearchBox";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSearchMovies } from "../hooks/search-movies";
-import { useGenreMovies } from "../hooks/genre-movies";
-import { getMovieGenresTitle } from "../utils/movies";
+import { useSearchMovies } from "src/hooks/search-movies";
+import { useGenreMovies } from "src/hooks/genre-movies";
+import { getMovieGenresTitle } from "src/utils/movies";
 
-const MovieCard = lazy(() => import("../components/MovieCard"));
+const MovieCard = lazy(() => import("src/components/MovieCard"));
 
 const App = () => {
   const navigate = useNavigate()

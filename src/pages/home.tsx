@@ -1,12 +1,12 @@
 import { lazy, memo, useEffect, useState } from "react";
-import { useDiscoverMovies } from "../hooks/discover-movies";
+import { useDiscoverMovies } from "src/hooks/discover-movies";
 import InfiniteScroll from "react-infinite-scroll-component";
-import SearchBox from "../components/SearchBox";
-import { useGenreMovies } from "../hooks/genre-movies";
-import { getMovieGenresTitle } from "../utils/movies";
-import GenreItem from "../components/GenreItem";
+import SearchBox from "src/components/SearchBox";
+import { useGenreMovies } from "src/hooks/genre-movies";
+import { getMovieGenresTitle } from "src/utils/movies";
+import GenreItem from "src/components/GenreItem";
 
-const MovieCard = lazy(() => import("../components/MovieCard"));
+const MovieCard = lazy(() => import("src/components/MovieCard"));
 
 const App = () => {
   const [mounted, setMounted] = useState<boolean>(false)

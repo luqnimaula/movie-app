@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react"
-import { MovieGenreItem } from "../types/movies"
-import { fetchMovieGenres } from "../services/movies"
+import { MovieGenreItem } from "src/types/movies"
+import { fetchMovieGenres } from "src/services/movies"
 
 export const useGenreMovies = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)

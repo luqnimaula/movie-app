@@ -1,5 +1,5 @@
 import { memo } from "react"
-import { MovieItem } from "../types/movies"
+import { MovieItem } from "src/types/movies"
 import { Star } from "react-feather"
 
 type Props = {
