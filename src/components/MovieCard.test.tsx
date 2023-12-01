@@ -22,82 +22,70 @@ const mockedData: MovieItem = {
 }
 const genreTitleTest = 'Science Fiction'
 
-// movie-card-poster
-// movie-card-rating
-// movie-card-title
-// movie-card-year
-// movie-card-genre
-// movie-card-overiew
+describe('Testing <MovieCard/>', () => {
+  it('should render component properly', () => {
+    render(<MovieCard data={mockedData} />)
+    const el = screen.getByTestId('movie-card')
+    expect(el).toBeInTheDocument()
+  })
 
-test('should render component properly', () => {
-  render(<MovieCard data={mockedData} />)
-  const el = screen.getByTestId('movie-card')
-  expect(el).toBeInTheDocument()
+  it('poster image: element needs to be exist & has matched inner content', () => {
+    render(<MovieCard data={mockedData} />)
+    const el = screen.getByTestId('movie-card-poster')
+    expect(el).toBeInTheDocument()
+    expect(el).toHaveAttribute('src', assetBasePath + mockedData.backdrop_path)
+  })
+
+  it('poster image: element needs to be exist & has matched inner content (use poster_path, if backdrop_path not exist)', () => {
+    // first, set backdrop_path to be empty
+    const copiedMockedData: MovieItem = {
+      ...mockedData,
+      backdrop_path: ''
+    }
+    render(<MovieCard data={copiedMockedData} />)
+    const el = screen.getByTestId('movie-card-poster')
+    expect(el).toBeInTheDocument()
+    expect(el).toHaveAttribute('src', assetBasePath + copiedMockedData.poster_path)
+  })
+
+  it('poster image: element needs to be exist & has matched inner content (use poster_path & backdrop_path not exist)', () => {
+    // first, set poster_path & backdrop_path to be empty
+    const copiedMockedData: MovieItem = {
+      ...mockedData,
+      backdrop_path: '',
+      poster_path: ''
+    }
+    render(<MovieCard data={copiedMockedData} />)
+    const el = screen.getByTestId('movie-card-poster')
+    expect(el).toBeInTheDocument()
+    expect(el).toHaveAttribute('src', defaultImage)
+  })
+
+  it('rating info: element needs to be exist & has matched inner content', () => {
+    render(<MovieCard data={mockedData} />)
+    const el = screen.getByTestId('movie-card-rating')
+    expect(el).toBeInTheDocument()
+    expect(el).toHaveTextContent(mockedData.vote_average.toString())
+  })
+
+  it('title info: element needs to be exist & has matched inner content', () => {
+    render(<MovieCard data={mockedData} />)
+    const el = screen.getByTestId('movie-card-title')
+    expect(el).toBeInTheDocument()
+    expect(el).toHaveTextContent(mockedData.original_title)
+  })
+
+  it('year info: element needs to be exist & has matched inner content', () => {
+    render(<MovieCard data={mockedData} />)
+    const el = screen.getByTestId('movie-card-year')
+    expect(el).toBeInTheDocument()
+    expect(el).toHaveTextContent(new Date(mockedData.release_date).getFullYear().toString())
+  })
+
+  it('genre info: element needs to be exist & has matched inner content (when throw genre props)', () => {
+    render(<MovieCard data={mockedData} genre={genreTitleTest} />)
+    const el = screen.getByTestId('movie-card-genre')
+    expect(el).toBeInTheDocument()
+    expect(el).toHaveTextContent(genreTitleTest)
+  })
 })
-
-test('poster image: element needs to be exist & has matched inner content', () => {
-  render(<MovieCard data={mockedData} />)
-  const el = screen.getByTestId('movie-card-poster')
-  expect(el).toBeInTheDocument()
-  expect(el).toHaveAttribute('src', assetBasePath + mockedData.backdrop_path)
-})
-
-test('poster image: element needs to be exist & has matched inner content (use poster_path, if backdrop_path not exist)', () => {
-  // first, set backdrop_path to be empty
-  const copiedMockedData: MovieItem = {
-    ...mockedData,
-    backdrop_path: ''
-  }
-  render(<MovieCard data={copiedMockedData} />)
-  const el = screen.getByTestId('movie-card-poster')
-  expect(el).toBeInTheDocument()
-  expect(el).toHaveAttribute('src', assetBasePath + copiedMockedData.poster_path)
-})
-
-test('poster image: element needs to be exist & has matched inner content (use poster_path & backdrop_path not exist)', () => {
-  // first, set poster_path & backdrop_path to be empty
-  const copiedMockedData: MovieItem = {
-    ...mockedData,
-    backdrop_path: '',
-    poster_path: ''
-  }
-  render(<MovieCard data={copiedMockedData} />)
-  const el = screen.getByTestId('movie-card-poster')
-  expect(el).toBeInTheDocument()
-  expect(el).toHaveAttribute('src', defaultImage)
-})
-
-test('rating info: element needs to be exist & has matched inner content', () => {
-  render(<MovieCard data={mockedData} />)
-  const el = screen.getByTestId('movie-card-rating')
-  expect(el).toBeInTheDocument()
-  expect(el).toHaveTextContent(mockedData.vote_average.toString())
-})
-
-test('title info: element needs to be exist & has matched inner content', () => {
-  render(<MovieCard data={mockedData} />)
-  const el = screen.getByTestId('movie-card-title')
-  expect(el).toBeInTheDocument()
-  expect(el).toHaveTextContent(mockedData.original_title)
-})
-
-test('year info: element needs to be exist & has matched inner content', () => {
-  render(<MovieCard data={mockedData} />)
-  const el = screen.getByTestId('movie-card-year')
-  expect(el).toBeInTheDocument()
-  expect(el).toHaveTextContent(new Date(mockedData.release_date).getFullYear().toString())
-})
-
-test('genre info: element needs to be exist & has matched inner content (when throw genre props)', () => {
-  render(<MovieCard data={mockedData} genre={genreTitleTest} />)
-  const el = screen.getByTestId('movie-card-genre')
-  expect(el).toBeInTheDocument()
-  expect(el).toHaveTextContent(genreTitleTest)
-})
-
-// test('should render poster image by using backdrop_path object', () => {
-//   render(<MovieCard data={mockedData} />)
-//   const el = screen.getByTestId('movie-card')
-//   expect(el).toBeInTheDocument()
-// })
-
