@@ -1,4 +1,4 @@
-import { lazy, memo, useEffect, useState } from "react";
+import { lazy, memo } from "react";
 import { useDiscoverMovies } from "src/hooks/discover-movies";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SearchBox from "src/components/SearchBox";
@@ -9,23 +9,8 @@ import GenreItem from "src/components/GenreItem";
 const MovieCard = lazy(() => import("src/components/MovieCard"));
 
 const App = () => {
-  const [mounted, setMounted] = useState<boolean>(false)
-  const { isLoading, selectedGenreId, changeSelectedGenreId, movies, total, getMovies, onLoadMore } = useDiscoverMovies()
-  const { genres, indexedMovieGenres, getMovieGenres } = useGenreMovies()
-
-  useEffect(() => {
-    // call the api only when it's been mounted
-    if (mounted) getMovieGenres()
-  }, [mounted])
-
-  useEffect(() => {
-    // prevent the api called twice
-    if (!mounted) {
-      setMounted(true)
-      return
-    }
-    getMovies()
-  }, [mounted, getMovieGenres, getMovies])
+  const { genres, indexedMovieGenres } = useGenreMovies()
+  const { isLoading, selectedGenreId, changeSelectedGenreId, movies, total, onLoadMore } = useDiscoverMovies()
 
   return (
     <InfiniteScroll

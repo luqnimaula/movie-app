@@ -1,8 +1,9 @@
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { MovieGenreItem } from "src/types/movies"
 import { fetchMovieGenres } from "src/services/movies"
 
 export const useGenreMovies = () => {
+  const [isMounted, setIsMounted] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [genres, setGenres] = useState<MovieGenreItem[]>([])
   
@@ -33,6 +34,15 @@ export const useGenreMovies = () => {
     },
     []
   )
+
+  useEffect(() => {
+    // call the api only when it's been mounted
+    if (!isMounted) {
+      setIsMounted(true)
+      return
+    }
+    getMovieGenres()
+  }, [isMounted])
 
   return {
     isLoading,

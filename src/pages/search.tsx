@@ -11,24 +11,9 @@ const MovieCard = lazy(() => import("src/components/MovieCard"));
 const App = () => {
   const navigate = useNavigate()
   const { search } = useLocation()
-  const [mounted, setMounted] = useState<boolean>(false)
-  const { isLoading, movies, total, getMovies, onLoadMore } = useSearchMovies()
-  const { indexedMovieGenres, getMovieGenres } = useGenreMovies()
-  const query = useMemo(() => new URLSearchParams(search).get('query'), [search])
-
-  useEffect(() => {
-    // call the api only when it's been mounted
-    if (mounted) getMovieGenres()
-  }, [mounted])
-
-  useEffect(() => {
-    // prevent the api called twice
-    if (!mounted) {
-      setMounted(true)
-      return
-    }
-    if (query) getMovies(query)
-  }, [mounted, getMovies, query])
+  const query = useMemo(() => new URLSearchParams(search).get('query') || '', [search])
+  const { indexedMovieGenres } = useGenreMovies()
+  const { isLoading, movies, total, onLoadMore } = useSearchMovies({ query })
 
   useEffect(() => {
     if (!query) navigate('/', {replace: true})

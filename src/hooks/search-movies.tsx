@@ -1,8 +1,13 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { MovieItem } from "src/types/movies"
 import { fetchSearchMovies } from "src/services/movies"
 
-export const useSearchMovies = () => {
+type SearchMovieArguments = {
+  query: string
+}
+
+export const useSearchMovies = ({ query }: SearchMovieArguments) => {
+  const [isMounted, setIsMounted] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [searchKeyword, setSearchKeyword] = useState<string>('')
   const [movies, setMovies] = useState<MovieItem[]>([])
@@ -10,7 +15,7 @@ export const useSearchMovies = () => {
   const [total, setTotal] = useState<number>(0)
 
   const getMovies = useCallback(
-    async (query: string) => {
+    async () => {
       try {
         setIsLoading(true)
         const { data } = await fetchSearchMovies({query, page})
@@ -22,11 +27,20 @@ export const useSearchMovies = () => {
         setIsLoading(false)
       }
     },
-    [page]
+    [page, query]
   )
 
   // increment the current page state value
   const onLoadMore = useCallback(() => setPage(currentPage => currentPage + 1), [])
+
+  useEffect(() => {
+    // prevent the api called twice
+    if (!isMounted) {
+      setIsMounted(true)
+      return
+    }
+    getMovies()
+  }, [isMounted, getMovies])
 
   return {
     isLoading,
