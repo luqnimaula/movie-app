@@ -10,8 +10,9 @@ type Props = {
 const GenreItem: React.FC<Props> = ({ name, value, isActive, onSelect }) => {
   return (
     <div 
+      data-testid='genre-item'
       onClick={() => onSelect(value)}
-      className={`${isActive ? 'text-white bg-primary-darkest' : 'text-primary hover:text-white bg-primary-darkest/25 hover:bg-primary-darkest cursor-pointer'} border-2 border-primary-darkest px-4 py-1.5 text-sm rounded-lg transition-all font-semibold`}
+      className={`${isActive ? 'text-white bg-primary-darkest active' : 'text-primary hover:text-white bg-primary-darkest/25 hover:bg-primary-darkest cursor-pointer'} border-2 border-primary-darkest px-4 py-1.5 text-sm rounded-lg transition-all font-semibold`}
     >
       {name}
     </div>
