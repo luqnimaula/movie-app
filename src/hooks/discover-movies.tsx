@@ -31,7 +31,7 @@ export const useDiscoverMovies = () => {
 
   const changeSelectedGenreId = useCallback((id: number) => {
     setSelectedGenreId(id)
-    // reset the movie's state
+    // reset the movie's states
     setPage(1)
     setTotal(0)
     setMovies([])
@@ -50,6 +50,7 @@ export const useDiscoverMovies = () => {
     isLoading,
     movies,
     total,
+    page,
     selectedGenreId,
     changeSelectedGenreId,
     onLoadMore

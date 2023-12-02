@@ -19,6 +19,10 @@ const mockedResolvedData: {
 }
 
 describe('Testing custom hook: useGenreMovies', () => {
+  afterAll(() => {
+    jest.clearAllMocks()
+  })
+
   it('should retrieve correct states and datas', async () => {
     mockedFetchMovieGenres.mockResolvedValueOnce(mockedResolvedData)
     const { result, rerender } = renderHook(useGenreMovies)
@@ -26,12 +30,12 @@ describe('Testing custom hook: useGenreMovies', () => {
     // function needs to be called
     expect(fetchMovieGenres).toHaveBeenCalled()
 
-    // should return default initial values
+    // should return correct states when loading
     expect(result.current).toEqual({
       isLoading: true,
       genres: [],
       indexedMovieGenres: {}
-    })
+    } as typeof result.current)
     
     // rerender to make state updates
     await act(async () => await rerender())
@@ -49,6 +53,6 @@ describe('Testing custom hook: useGenreMovies', () => {
         ...obj,
         [genre.id]: genre.name
       }), {} as Record<number, string>)
-    })
+    } as typeof result.current)
   })
 })
