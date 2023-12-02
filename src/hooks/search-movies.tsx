@@ -21,7 +21,7 @@ export const useSearchMovies = ({ query }: SearchMovieArguments) => {
         setMovies(current => [...current, ...data.results])
         setTotal(data.total_results)
       } catch (error) {
-        // toast.error(getErrorMessage(error))
+        // handle error goes here
       } finally {
         setIsLoading(false)
       }

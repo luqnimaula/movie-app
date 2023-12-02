@@ -27,7 +27,7 @@ export const useGenreMovies = () => {
           ...data.genres
         ])
       } catch (error) {
-        // toast.error(getErrorMessage(error))
+        // handle error goes here
       } finally {
         setIsLoading(false)
       }
