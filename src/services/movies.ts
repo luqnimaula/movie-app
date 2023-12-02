@@ -17,7 +17,6 @@ export const fetchDiscoverMovies = async ({ page, genreId  }: DiscoverMoviesPara
       '/discover/movie',
       {
         params: { 
-          include_video: true,
           page,
           ...genreId ? { with_genres: genreId } : {}
         }
@@ -35,7 +34,6 @@ export const fetchSearchMovies = async ({query, page}: SearchMoviesParams) => {
       '/search/movie',
       {
         params: {
-          include_video: true,
           query,
           page,
         }
