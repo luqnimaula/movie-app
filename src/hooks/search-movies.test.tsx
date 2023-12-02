@@ -1,12 +1,13 @@
 import { renderHook, waitFor } from "@testing-library/react";
-import { fetchDiscoverMovies } from "src/services/movies";
+import { fetchSearchMovies } from "src/services/movies";
 import { MovieItem } from "src/types/movies";
 import { act } from "react-dom/test-utils";
-import { useDiscoverMovies } from "./discover-movies";
+import { useSearchMovies } from "./search-movies";
 
 jest.mock('src/services/movies')
 
-const mockedFetchDiscoverMovies = fetchDiscoverMovies as jest.Mock
+const mockedFetchSearchMovies = fetchSearchMovies as jest.Mock
+const expectedQuery = 'lorem ipsum dolor sit amet'
 const mockedResolvedData: {
   data: { results: MovieItem[], total_results: number }
 } = {
@@ -49,9 +50,9 @@ const mockedResolvedData: {
   }
 }
 
-describe('Testing custom hook: useDiscoverMovies', () => {
+describe('Testing custom hook: useSearchMovies', () => {
   beforeEach(() => {
-    mockedFetchDiscoverMovies.mockResolvedValueOnce(mockedResolvedData)
+    mockedFetchSearchMovies.mockResolvedValueOnce(mockedResolvedData)
   })
 
   afterAll(() => {
@@ -59,12 +60,12 @@ describe('Testing custom hook: useDiscoverMovies', () => {
   })
 
   it('should retrieve correct states and datas', async () => {
-    const { result, rerender } = renderHook(useDiscoverMovies)
+    const { result, rerender } = renderHook(() => useSearchMovies({ query: expectedQuery }))
 
     // function needs to be called with arguments
-    expect(fetchDiscoverMovies).toHaveBeenCalledWith({
+    expect(fetchSearchMovies).toHaveBeenCalledWith({
       page: 1,
-      genreId: 0
+      query: expectedQuery
     })
 
     // should return correct states when loading
@@ -73,28 +74,24 @@ describe('Testing custom hook: useDiscoverMovies', () => {
       page: 1,
       isLoading: true,
       movies: [],
-      selectedGenreId: 0,
-      onLoadMore: expect.any(Function),
-      changeSelectedGenreId: expect.any(Function)
+      onLoadMore: expect.any(Function)
     } as typeof result.current)
-    
+
     // rerender to make state updates
     await act(async () => await rerender())
 
-    // should return expected states when fetchDiscoverMovies has been resolved
+    // should return expected states when fetchSearchMovies has been resolved
     expect(result.current).toEqual({
       total: mockedResolvedData.data.total_results,
       page: 1,
       isLoading: false,
       movies: mockedResolvedData.data.results,
-      selectedGenreId: 0,
-      onLoadMore: expect.any(Function),
-      changeSelectedGenreId: expect.any(Function)
+      onLoadMore: expect.any(Function)
     } as typeof result.current)
   })
 
   it('should increment page number state when onLoadMore has been trigerred', async () => {
-    const { result } = renderHook(useDiscoverMovies)
+    const { result } = renderHook(() => useSearchMovies({ query: expectedQuery }))
 
     // should return correct page state
     expect(result.current.page).toEqual(1)
@@ -104,26 +101,5 @@ describe('Testing custom hook: useDiscoverMovies', () => {
 
     // should increment correct page state
     expect(result.current.page).toEqual(2)
-  })
-
-  it('should change selectedGenreId state & handle changeSelectedGenreId properly when it has been trigerred', async () => {
-    const expectedSelectedGenreId = 20
-    const { result, rerender } = renderHook(useDiscoverMovies)
-
-    // should return correct page state
-    expect(result.current.selectedGenreId).toEqual(0)
-    
-    // trigger changeSelectedGenreId
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      await rerender()
-      await result.current.changeSelectedGenreId(expectedSelectedGenreId)
-      await rerender()
-    })
-
-    await waitFor(() => {
-      // should change the state
-      expect(result.current.selectedGenreId).toEqual(expectedSelectedGenreId)
-    })
   })
 })

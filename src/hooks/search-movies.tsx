@@ -45,6 +45,7 @@ export const useSearchMovies = ({ query }: SearchMovieArguments) => {
     isLoading,
     movies,
     total,
+    page,
     onLoadMore
   }
 }
