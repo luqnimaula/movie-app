@@ -9,7 +9,6 @@ type SearchMovieArguments = {
 export const useSearchMovies = ({ query }: SearchMovieArguments) => {
   const [isMounted, setIsMounted] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [searchKeyword, setSearchKeyword] = useState<string>('')
   const [movies, setMovies] = useState<MovieItem[]>([])
   const [page, setPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
@@ -45,9 +44,6 @@ export const useSearchMovies = ({ query }: SearchMovieArguments) => {
   return {
     isLoading,
     movies,
-    getMovies,
-    searchKeyword,
-    setSearchKeyword,
     total,
     onLoadMore
   }

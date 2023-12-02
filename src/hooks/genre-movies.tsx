@@ -47,7 +47,6 @@ export const useGenreMovies = () => {
   return {
     isLoading,
     genres,
-    indexedMovieGenres,
-    getMovieGenres
+    indexedMovieGenres
   }
 }

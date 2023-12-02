@@ -52,7 +52,6 @@ export const useDiscoverMovies = () => {
     total,
     selectedGenreId,
     changeSelectedGenreId,
-    getMovies,
     onLoadMore
   }
 }
