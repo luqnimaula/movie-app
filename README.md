@@ -1,7 +1,7 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-Before start, please rename the `.env-sample` file to be `.env`.
+Before start, please rename the `.env-sample` file to be `.env`. Please at least use node js version `v18.2.0`
 
 ## Available Scripts
 
