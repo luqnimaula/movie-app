@@ -2,7 +2,7 @@ import { useGenreMovies } from "src/hooks/genre-movies"
 import { useSearchMovies } from "src/hooks/search-movies"
 import Search from "./search"
 import { act, render, screen, waitFor } from "@testing-library/react"
-import { MemoryRouter, Route, RouteObject, RouterProvider, Routes, createMemoryRouter } from "react-router-dom"
+import { RouteObject, RouterProvider, createMemoryRouter } from "react-router-dom"
 
 jest.mock('src/hooks/genre-movies')
 jest.mock('src/hooks/search-movies')

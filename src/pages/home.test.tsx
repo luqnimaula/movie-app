@@ -65,8 +65,11 @@ const mockedGenreMovies = useGenreMovies as jest.Mock
 const mockedDiscoverMovies = useDiscoverMovies as jest.Mock
 
 describe('Testing home page', () => {
-  it('should render <Home/> page properly', async () => {
+  beforeEach(() => {
     mockedGenreMovies.mockReturnValue(mockedReturnValueGenreMovies)
+  })
+
+  it('should render <Home/> page properly', async () => {
     mockedDiscoverMovies.mockReturnValue(mockedReturnValueDiscoverMovies)
 
     const { rerender } = render(<Home/>)
@@ -74,7 +77,18 @@ describe('Testing home page', () => {
     // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(() => rerender(<Home/>))
 
+    // home page wrapper needs to be exist
     expect(screen.getByTestId('home-page')).toBeInTheDocument()
+
+    // page title needs to be exist
+    expect(screen.getByTestId('home-page-title')).toBeInTheDocument()
+
+    // genres list needs to be exist
+    expect(screen.getByTestId('home-page-genres')).toBeInTheDocument()
+
+    // search box needs to be exist
+    expect(screen.getByTestId('form-search-box')).toBeInTheDocument()
+
     await waitFor(async () => {
       // needs to render genres
       await expect(screen.getAllByTestId('genre-item')).toHaveLength(2)
@@ -85,13 +99,12 @@ describe('Testing home page', () => {
   })
 
   it('should render loading state page properly', async () => {
-    mockedGenreMovies.mockReturnValue(mockedReturnValueGenreMovies)
     mockedDiscoverMovies.mockReturnValue({
       ...mockedReturnValueDiscoverMovies,
       isLoading: true,
       movies: [],
       total: 0
-    })
+    } as typeof mockedReturnValueDiscoverMovies)
 
     const { rerender } = render(<Home/>)
 
@@ -106,11 +119,10 @@ describe('Testing home page', () => {
 
   it('should handle genre item onSelect properly when user click on it', async () => {
     const callback = jest.fn()
-    mockedGenreMovies.mockReturnValue(mockedReturnValueGenreMovies)
     mockedDiscoverMovies.mockReturnValue({
       ...mockedReturnValueDiscoverMovies,
       changeSelectedGenreId: callback
-    })
+    } as typeof mockedReturnValueDiscoverMovies)
 
     const { rerender } = render(<Home/>)
 
