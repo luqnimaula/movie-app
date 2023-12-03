@@ -28,22 +28,34 @@ const App = () => {
       loader={<div className='text-center mt-4 text-white'>Loading more movies...</div>}
       className='w-full min-h-screen p-10 space-y-8'
     >
-      <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6 md:gap-3">
+      <div 
+        data-testid='search-page'
+        className="flex flex-col md:flex-row md:justify-between md:items-start gap-6 md:gap-3"
+      >
         <div className="text-white space-y-1">
-          <div className="text-3xl font-bold">
+          <div 
+            data-testid='search-page-title'
+            className="text-3xl font-bold"
+          >
             Results for "{query}"
           </div>
-          <div>Found {total} search results</div>
+          <div data-testid='search-page-counter'>Found {total} search results</div>
         </div>
-        <SearchBox defaultValue={query || ''}/>
+        <SearchBox defaultValue={query as string}/>
       </div>
       {(isLoading && movies.length < 1) && (
-        <div className="w-full grid place-items-center h-[60vh]">
+        <div 
+          data-testid='search-page-loader'
+          className="w-full grid place-items-center h-[60vh]"
+        >
           <div className="text-sm text-white">Loading...</div>
         </div>
       )}
       {(!isLoading && movies.length < 1) && (
-        <div className="w-full grid place-items-center h-[60vh]">
+        <div 
+          data-testid='search-page-empty'
+          className="w-full grid place-items-center h-[60vh]"
+        >
           <div className="text-sm text-white">No any movies found</div>
         </div>
       )}
