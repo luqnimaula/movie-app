@@ -40,6 +40,13 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Additional Features
+
+These are list of additional features I have added to this application to enhances user experience:
+- Filter by genre: Filter movies by a specific genre
+- Infinite scroll: Load next data when user scroll to the bottom of page
+- Stand alone search results page: A dedicated search results page that retains the URL and search query, ensuring users see the same search results even if they refresh the page.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
