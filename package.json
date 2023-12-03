@@ -51,6 +51,20 @@
   "jest": {
     "transformIgnorePatterns": [
       "node_modules/(?!axios)/"
-    ]
+    ],
+    "coveragePathIgnorePatterns": [
+      "src/index.tsx",
+      "src/App.tsx",
+      "src/reportWebVitals.ts",
+      "src/types"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    }
   }
 }
